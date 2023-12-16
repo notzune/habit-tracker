@@ -13,7 +13,7 @@ def is_new_day(last_check_time):
 def main():
     config = load_config()
     tracked_apps = get_config_option('tracked_apps')
-    update_interval = get_config_option('update_interval', 10)
+    update_interval = get_config_option('update_interval')
 
     last_active_app = None
     last_check_time = datetime.now()
