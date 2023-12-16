@@ -1,0 +1,23 @@
+{
+  "name": "habit-tracker",
+  "version": "1.0.0",
+  "description": "A Python application that records time spent doing certain activities, primarily built to keep track of how much time you spend coding each day.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notzune/habit-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/notzune/habit-tracker/issues"
+  },
+  "homepage": "https://github.com/notzune/habit-tracker#readme"
+}
