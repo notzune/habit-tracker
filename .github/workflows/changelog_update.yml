@@ -1,4 +1,4 @@
-name: Generate Changelog
+name: Generate Changelog and Update Version
 
 on:
   push:
@@ -8,7 +8,8 @@ on:
 jobs:
   generate-changelog:
     runs-on: ubuntu-latest
-
+    outputs:
+      new_version: ${{ steps.semver.outputs.new_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,6 +28,37 @@ jobs:
         run: npm install
 
       - name: Generate Changelog and Bump Version
+        id: semver
+        run: |
+          npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }} # Make sure PAT is configured in your repo settings
-        run: npx semantic-release
+
+  update-version-in-setup:
+    runs-on: ubuntu-latest
+    needs: generate-changelog
+    if: needs.generate-changelog.outputs.new_version != ''
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Update version in setup.py
+        run: |
+          echo "New version is ${{ needs.generate-changelog.outputs.new_version }}"
+          python .github/scripts/update_version.py "${{ needs.generate-changelog.outputs.new_version }}"
+        env:
+          NEW_VERSION: ${{ needs.generate-changelog.outputs.new_version }}
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git diff
+          git add setup.py
+          git commit -m "chore: bump version to ${{ needs.generate-changelog.outputs.new_version }}" || exit 0 # This will not fail if no changes
+          git push
