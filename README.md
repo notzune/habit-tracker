@@ -13,7 +13,7 @@ A Python application that records time spent doing certain activities, primarily
 ### Step-by-Step Instructions
 
 #### Step 1: Clone the Repository
-1. **Open your Command Line Interface (CLI)**: This can be Terminal on MacOS/Linux or Command Prompt/Powershell on Windows.
+1. **Open your Command Line Interface (CLI)**: This can be Terminal on macOS/Linux or Command Prompt/Powershell on Windows.
 2. **Navigate to the Directory** where you want to store the project.
 3. **Clone the Repository**:
    ```git clone https://github.com/notzune/habit-tracker.git```
