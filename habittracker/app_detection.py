@@ -36,3 +36,8 @@ def get_active_window_title():
         return get_active_window_title_linux()
     else:
         raise NotImplementedError("OS not supported")
+
+
+# Example usage
+if __name__ == "__main__":
+    print(f"The active window is: {get_active_window_title()}")

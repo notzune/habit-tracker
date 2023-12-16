@@ -1,0 +1,4 @@
+tracked_apps:
+- PyCharm
+- Vim
+update_interval: 10

@@ -17,7 +17,7 @@ else:
     required = []
 
 common_requirements = [
-
+    'pyyaml'
 ]
 
 setup(
