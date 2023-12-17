@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/notzune/habit-tracker/compare/v1.0.3...v1.0.4) (2023-12-17)
+
+
+### Bug Fixes
+
+* fix bump ver workflow ([3d5316c](https://github.com/notzune/habit-tracker/commit/3d5316cf082d041afa4ebd66745aea84666581f4))
+
 ## [1.0.3](https://github.com/notzune/habit-tracker/compare/v1.0.2...v1.0.3) (2023-12-17)
 
 
