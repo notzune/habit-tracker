@@ -1,21 +1,13 @@
-name: Unit Tests and Issue Creation on Failure
+name: Unit Tests
 
 on:
   push:
     branches:
       - main
 
-permissions:
-  issues: write
-  contents: read
-
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
-    outputs:
-      tests-failed: ${{ steps.check-test-outcome.outcome == 'failure' }}
-      issue-title: ${{ steps.process-output.outputs.issue-title }}
-      issue-body: ${{ steps.process-output.outputs.issue-body }}
 
     steps:
       - name: Checkout code
@@ -29,8 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: List .github/scripts directory
+        run: ls -l .github/scripts/
+
       - name: Run unittests and capture output
-        run: python -m unittest discover -s tests > test_output.txt 2>&1 || true
+        run: python .github/scripts/run_tests.py > test_output.txt 2>&1 || true
 
       - name: Upload test output as an artifact
         if: failure()
@@ -39,36 +34,6 @@ jobs:
           name: test-output
           path: test_output.txt
 
-      - name: Process test output
-        id: process-output
-        if: ${{ always() }}
-        run: |
-          if [ -s test_output.txt ]; then
-            ISSUE_TITLE=$(tail -n 1 test_output.txt | grep -o '^[^:]*')
-            echo "Issue Title: $ISSUE_TITLE"
-            echo "::set-output name=issue-title::${ISSUE_TITLE}"
-            ISSUE_BODY=$(cat test_output.txt)
-            echo "Issue Body: $ISSUE_BODY"
-            echo "::set-output name=issue-body::${ISSUE_BODY}"
-          else
-            echo "No output from tests, or tests did not fail"
-          fi
-
-      - name: Check test outcome
-        id: check-test-outcome
+      - name: Fail if tests fail
         if: failure()
-        run: echo "Tests failed"
-
-  create-issue:
-    runs-on: ubuntu-latest
-    needs: unit-tests
-    if: ${{ needs.unit-tests.outputs.tests-failed && needs.unit-tests.outputs.issue-title && needs.unit-tests.outputs.issue-body }}
-    steps:
-      - name: Create issue on test failure
-        uses: imjohnbo/issue-bot@v3
-        with:
-          title: ${{ needs.unit-tests.outputs.issue-title }}
-          body: ${{ needs.unit-tests.outputs.issue-body }}
-          labels: bug
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: exit 1

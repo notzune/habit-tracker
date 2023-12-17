@@ -1,0 +1,50 @@
+name: Create Issue on Test Failure
+
+on:
+  workflow_run:
+    workflows: ["Unit Tests"]
+    types:
+      - completed
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  issue-creation:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Download test output artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-output
+
+      - name: List files in the workspace
+        run: ls -al
+
+      - name: Read test output
+        id: read-test-output
+        run: |
+          if [[ -f test_output.txt ]]; then
+            ISSUE_BODY=$(<test_output.txt)
+            echo "Issue Body: $ISSUE_BODY"
+            ISSUE_TITLE=$(tail -n 1 test_output.txt | grep -o '^[^:]*')
+            echo "Issue Title: $ISSUE_TITLE"
+            echo "ISSUE_BODY<<EOF" >> $GITHUB_ENV
+            cat test_output.txt >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            echo "ISSUE_TITLE=$ISSUE_TITLE" >> $GITHUB_ENV
+          else
+            echo "test_output.txt does not exist or is empty" >> $GITHUB_ENV
+          fi
+
+      - name: Create issue on test failure
+        if: ${{ env.ISSUE_TITLE != '' && env.ISSUE_BODY != '' }}
+        uses: imjohnbo/issue-bot@v3
+        with:
+          title: ${{ env.ISSUE_TITLE }}
+          body: ${{ env.ISSUE_BODY }}
+          labels: bug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
