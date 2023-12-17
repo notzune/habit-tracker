@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -17,14 +19,12 @@ jobs:
           python-version: '3.x'
 
       - name: Extract the version number from the release tag
-        id: get_version
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Update version in setup.py
         run: |
-          echo "New version is ${{ needs.generate-changelog.outputs.new_version }}"
-          python .github/scripts/update_version.py "${{ needs.generate-changelog.outputs.new_version }}"
-        working-directory: ./
+          echo "New version is $RELEASE_VERSION"
+          python .github/scripts/update_version.py "$RELEASE_VERSION"
 
       - name: Commit and push if changed
         run: |
@@ -33,7 +33,6 @@ jobs:
           git diff
           git add setup.py
           git commit -m "chore: bump version to $RELEASE_VERSION" || exit 0 # This will not fail if no changes
-          git push
+          git push origin HEAD:main  # Replace 'main' with your branch name if different
         env:
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
