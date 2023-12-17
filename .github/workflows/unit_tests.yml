@@ -32,8 +32,10 @@ jobs:
         id: process-output
         run: |
           ISSUE_TITLE=$(tail -n 1 test_output.txt | grep -o '^[^:]*')
+          echo "Issue Title: $ISSUE_TITLE"
           echo "::set-output name=issue-title::${ISSUE_TITLE}"
           ISSUE_BODY=$(cat test_output.txt)
+          echo "Issue Body: $ISSUE_BODY"
           echo "::set-output name=issue-body::${ISSUE_BODY}"
         if: failure()
 
