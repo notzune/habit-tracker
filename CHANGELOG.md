@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/notzune/habit-tracker/compare/v1.0.1...v1.0.2) (2023-12-17)
+
+
+### Bug Fixes
+
+* add status badge to readme ([343d158](https://github.com/notzune/habit-tracker/commit/343d158f4e236af88d2f13b3e5088279177457bd))
+
 ## [1.0.1](https://github.com/notzune/habit-tracker/compare/v1.0.0...v1.0.1) (2023-12-17)
 
 
