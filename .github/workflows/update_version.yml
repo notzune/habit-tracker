@@ -35,4 +35,4 @@ jobs:
           git commit -m "chore: bump version to $RELEASE_VERSION" || exit 0 # This will not fail if no changes
           git push origin HEAD:main  # Replace 'main' with your branch name if different
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
