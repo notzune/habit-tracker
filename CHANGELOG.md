@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/notzune/habit-tracker/compare/v1.0.4...v1.0.5) (2023-12-17)
+
+
+### Bug Fixes
+
+* change token to PAT ([9e5c070](https://github.com/notzune/habit-tracker/commit/9e5c0700a4d7d0c584f4d1883e7fe0aadb254b55))
+
 ## [1.0.4](https://github.com/notzune/habit-tracker/compare/v1.0.3...v1.0.4) (2023-12-17)
 
 
