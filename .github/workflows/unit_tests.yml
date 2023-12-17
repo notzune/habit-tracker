@@ -1,0 +1,57 @@
+name: Unit Tests and Issue Creation on Failure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    outputs:
+      tests-failed: ${{ steps.check-test-outcome.outcome == 'failure' }}
+      issue-title: ${{ steps.process-output.outputs.issue-title }}
+      issue-body: ${{ steps.process-output.outputs.issue-body }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run unittests and capture output
+        run: python -m unittest discover -s tests > test_output.txt 2>&1 || true
+
+      - name: Process test output
+        id: process-output
+        run: |
+          ISSUE_TITLE=$(tail -n 1 test_output.txt | grep -o '^[^:]*')
+          echo "::set-output name=issue-title::${ISSUE_TITLE}"
+          ISSUE_BODY=$(cat test_output.txt)
+          echo "::set-output name=issue-body::${ISSUE_BODY}"
+        if: failure()
+
+      - name: Check test outcome
+        id: check-test-outcome
+        if: failure()
+        run: echo "Tests failed"
+
+  create-issue:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    if: ${{ needs.unit-tests.outputs.tests-failed }}
+    steps:
+      - name: Create issue
+        uses: imjohnbo/issue-bot@v3
+        with:
+          title: ${{ needs.unit-tests.outputs.issue-title }}
+          body: ${{ needs.unit-tests.outputs.issue-body }}
+          labels: bug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
