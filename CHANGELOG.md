@@ -1,3 +1,17 @@
+## [1.0.1](https://github.com/notzune/habit-tracker/compare/v1.0.0...v1.0.1) (2023-12-17)
+
+
+### Bug Fixes
+
+* add proper permissions to workflow ([0e137e8](https://github.com/notzune/habit-tracker/commit/0e137e8bbc29bc25aa3c491e73be9779c11bc810))
+* add unit test workflow ([bfd5523](https://github.com/notzune/habit-tracker/commit/bfd5523bb6b8a1369d39fc62d2ecee3e852b6e57))
+* create os dependent requirements file ([1379f4e](https://github.com/notzune/habit-tracker/commit/1379f4ea7ebe678f80760b4d6b883831aa222d1b))
+* modify existing unittests ([7f9a437](https://github.com/notzune/habit-tracker/commit/7f9a43799d9892f87a26c97992b2ecff5275ec43))
+* modify release workflow ([638187c](https://github.com/notzune/habit-tracker/commit/638187cb1cdff6f06c53125af79db697f7e7df09))
+* remove os specific packages from main req file ([974f594](https://github.com/notzune/habit-tracker/commit/974f5940bad815fb04a4c881c03af4d5b32628cc))
+* small tweaks to workflow ([0e63957](https://github.com/notzune/habit-tracker/commit/0e639579f68e24b6fee77f8a4ff8aebd6fd0f95a))
+* update requirements.txt ([7d605e4](https://github.com/notzune/habit-tracker/commit/7d605e4b2967c4a859b0355cccce95cb1c88ddbb))
+
 # 1.0.0 (2023-12-16)
 
 
