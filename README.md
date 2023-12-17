@@ -3,6 +3,7 @@ A Python application that records time spent doing certain activities, primarily
 
 
 [![Unit Tests](https://github.com/notzune/habit-tracker/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/notzune/habit-tracker/actions/workflows/unit_tests.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/notzune/habit-tracker)
 
 ---
 
