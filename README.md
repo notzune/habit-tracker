@@ -1,6 +1,9 @@
 # habit-tracker
 A Python application that records time spent doing certain activities, primarily built to keep track of how much time you spend coding each day.
 
+
+[![Unit Tests](https://github.com/notzune/habit-tracker/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/notzune/habit-tracker/actions/workflows/unit_tests.yml)
+
 ---
 
 ## Building From Source
