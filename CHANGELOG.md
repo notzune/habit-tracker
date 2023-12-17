@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/notzune/habit-tracker/compare/v1.0.2...v1.0.3) (2023-12-17)
+
+
+### Bug Fixes
+
+* issue with updating version script ([ddb90ea](https://github.com/notzune/habit-tracker/commit/ddb90ea211c890c962bb1b1662244edb5917a025))
+
 ## [1.0.2](https://github.com/notzune/habit-tracker/compare/v1.0.1...v1.0.2) (2023-12-17)
 
 
